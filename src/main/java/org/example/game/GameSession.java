@@ -11,6 +11,11 @@ import java.util.stream.Stream;
 
 public class GameSession {
 
+    public static void main(String[] args) throws IOException {
+        GameSession gameSession = new GameSession("HARD");
+        gameSession.startSession();
+    }
+
     private static final String FILE_FOR_D3 = "src/main/resources/dictionary_7.txt";
     private static final String FILE_FOR_D2 = "src/main/resources/dictionary_5.txt";
     private static final String FILE_FOR_D1 = "src/main/resources/dictionary_3.txt";

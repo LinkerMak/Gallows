@@ -5,71 +5,65 @@ import java.util.*;
 public class Gallows {
     private int errors = 0;
     private String word;
-    private Set<Character> letters;
     private StringBuilder mask;
+    private GallowsInputChecker inputChecker;
     private List<Character> predictLetters;
 
     public Gallows(String word) {
         this.word = word.toLowerCase();
 
-        predictLetters = new ArrayList<>();
-        letters = new HashSet();
-        mask = new StringBuilder();
-        for(char ch : this.word.toCharArray()) {
+        mask = new StringBuilder(word.length());
+        for(int i = 0; i < word.length(); i++) {
             mask.append('*');
-            letters.add(ch);
         }
 
+        predictLetters = new ArrayList<>();
+        inputChecker = new GallowsInputChecker(word, mask, predictLetters);
     }
 
     public int startGame() {
         System.out.println("Игра началась!. Чтобы выиграть введите слово полностью или можете отгадывать буквы :)");
 
         while (errors != 5) {
-            if(stage() == -1) return -1;
+            if(stage() == 1) return 1;
         }
 
         return 0;
     }
 
     private int stage() {
+        System.out.println("-----------------------");
         System.out.println("Ваше слово:" + mask);
-        System.out.println("Введите букву:");
+        int result = input();
 
-        Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine().toLowerCase();
-
-        if(str.equals(this.word)) {
-            return -1;
-        }
-        else if(str.length() > 1) {
-            System.out.println("Неправильно");
-            printHangman();
-            errors++;
-        }
-        else if(str.length() == 1) {
-            char ch = str.charAt(0);
-            if(letters.contains(ch)) {
-                for(int i = 0; i < word.length();i++) {
-                    if(word.charAt(i) == ch) {
-                        mask.setCharAt(i, ch);
-                    }
-                }
+        switch(result) {
+            case 1 -> {
+                return 1;
             }
-            else{
-                System.out.println("Упс, такой буквы нет!");
+            case -1 -> {
                 printHangman();
                 errors++;
             }
-
-            predictLetters.add(ch);
-            System.out.println("Вы использовали буквы: ");
-            for (Character letter : predictLetters) {
-                System.out.print(ch + " ");
-            }
         }
 
+        System.out.print("Вы использовали буквы: ");
+        for (Character letter : predictLetters) {
+            System.out.print(letter + " ");
+        }
+        System.out.println();
+
         return 0;
+    }
+
+    private int input() {
+        int result = 0;
+        Scanner scanner = new Scanner(System.in);
+        while(result == 0) {
+            System.out.println("Введите ответ или букву:");
+            result = inputChecker.check(scanner.nextLine().toLowerCase());
+        }
+
+        return result;
     }
 
     private void printHangman() {
