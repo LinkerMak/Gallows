@@ -5,6 +5,7 @@
 <img width="870" height="224" alt="image" src="https://github.com/user-attachments/assets/a7216187-5d23-4bcd-8d87-229baf1e09c2" />
 
 Если игрок введет букву, которой нет в слове, он потратит одну из 5 возможностей ошибиться. После 5 ошибок игра заканчивается, если правильное слово не было введено.
+
 <img width="415" height="275" alt="image" src="https://github.com/user-attachments/assets/3863b7ab-9a05-4dda-be38-4e9242a8085d" />
 
 Если игрок введет правильное слово, то он выигрывает.
